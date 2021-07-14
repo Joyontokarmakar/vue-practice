@@ -1,26 +1,41 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>DC Heros : {{herosCount}}</h1>
+  <ul>
+    <li v-for="(hero, index) in dcHeros" :key="index">{{ hero.name}}</li>
+  </ul>
+  <form @submit.prevent="addHero()">
+    <input v-model="newHero" placeholder="Type Hero Name">
+    <button type="submit">Add Hero</button>
+  </form>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+  computed:{
+    herosCount(){
+      return this.dcHeros.length;
+    }
+  },
+  methods:{
+    addHero(){
+      if(this.newHero != ""){
+        this.dcHeros.push( {name: this.newHero} ); 
+        this.newHero='';
+      }
+    },
+  },
+  data() {
+    return {
+      isDisabled: true,
+      newHero: "Aquaman",
+      dcHeros: [
+        {name: "SuperGirl"}, 
+        {name: "Flash"}, 
+        {name: "Arrows"}, 
+        {name: "Batman"}, 
+        {name: "SuperMan"},
+      ],
+    }
+  },
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
